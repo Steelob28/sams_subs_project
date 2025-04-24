@@ -138,11 +138,35 @@ const CustomerDashboard = () => {
     <Box 
       sx={{ 
         minHeight: '100vh',
-        background: '#FFFFFF',
-        py: 4
+        background: `
+          repeating-conic-gradient(
+            #FFFFFF 0% 25%,
+            #FFE5E5 25% 50%,
+            #FFFFFF 50% 75%,
+            #FFD6D6 75% 100%
+          ) 50% / 50px 50px
+        `,
+        py: 4,
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(255, 255, 255, 0.3)',
+          zIndex: 0
+        }
       }}
     >
-      <Container maxWidth="md">
+      <Container 
+        maxWidth="md" 
+        sx={{ 
+          position: 'relative',
+          zIndex: 1 
+        }}
+      >
         {/* Header Card */}
         <Card 
           sx={{ 

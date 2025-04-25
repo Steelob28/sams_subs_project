@@ -26,7 +26,9 @@ const MetricCard = ({ title, value, subtitle }) => {
           transform: 'scale(1.02)',
           boxShadow: '0 8px 24px rgba(209, 32, 49, 0.15)',
         },
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
       <CardContent sx={{ p: 3 }}>
@@ -41,11 +43,12 @@ const MetricCard = ({ title, value, subtitle }) => {
           {title}
         </Typography>
         <Typography 
-          variant="h4" 
+          variant="h5"
           sx={{ 
             mb: 1, 
             fontWeight: 'bold',
-            color: '#2C2C2C'
+            color: '#2C2C2C',
+            lineHeight: 1.3
           }}
         >
           {value}
@@ -54,7 +57,8 @@ const MetricCard = ({ title, value, subtitle }) => {
           <Typography 
             variant="subtitle1" 
             sx={{ 
-              color: '#666666'
+              color: '#666666',
+              fontStyle: 'italic'
             }}
           >
             {subtitle}
@@ -70,7 +74,6 @@ const getMonthName = (monthNumber) => {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  // Subtract 1 since array is 0-based and our months are 1-based
   return months[parseInt(monthNumber) - 1] || 'N/A';
 };
 
@@ -96,12 +99,9 @@ const CustomerDashboard = () => {
 
   const fetchMetrics = async (customerKey) => {
     try {
-      console.log('Fetching metrics for customer:', customerKey); // Debug log
       const response = await axios.get(`http://localhost:8000/api/data/customer_metrics/?customer_key=${customerKey}`);
-      console.log('Metrics response:', response.data); // Debug log
       setMetrics(response.data);
     } catch (error) {
-      console.error('Error fetching metrics:', error); // Debug log
       setError('Failed to load metrics');
     } finally {
       setLoading(false);
@@ -239,27 +239,28 @@ const CustomerDashboard = () => {
         <Stack spacing={3}>
           <MetricCard
             title="Favorite Sandwich"
-            value={metrics?.favorite_sandwich?.SANDWICH || 'N/A'}
-            subtitle={`Ordered ${metrics?.favorite_sandwich?.SANDWICH_COUNT || 0} times`}
+            value={`Your most ordered sandwich was ${metrics?.favorite_sandwich?.SANDWICH || 'N/A'}`}
+            subtitle={`Turns out you really love this one, you ordered it ${metrics?.favorite_sandwich?.SANDWICH_COUNT || 0} times!`}
           />
           <MetricCard
             title="Favorite Side"
-            value={metrics?.favorite_side?.SIDE || 'N/A'}
-            subtitle={`Ordered ${metrics?.favorite_side?.SIDE_COUNT || 0} times`}
+            value={`You can't resist the ${metrics?.favorite_side?.SIDE || 'N/A'}`}
+            subtitle={`You've ordered this tasty side ${metrics?.favorite_side?.SIDE_COUNT || 0} times - it's definitely your go-to!`}
           />
           <MetricCard
-            title="Total Inches of Sandwich"
+            title="Inches of Sandwich Destroyed!"
             value={`${metrics?.total_inches?.INCHES_OF_SANDWICH || 0} inches`}
+            subtitle="That's a lot of sandwich power!"
           />
           <MetricCard
-            title="Most Visited Store"
-            value={metrics?.most_visited_store?.CITY || 'N/A'}
-            subtitle={`Your go-to spot with ${metrics?.most_visited_store?.MOST_VISITED_COUNT || 0} visits`}
+            title="Local Legend Status"
+            value={`${metrics?.most_visited_store?.CITY || 'N/A'} is Your Second Home`}
+            subtitle={`You've walked through those doors ${metrics?.most_visited_store?.MOST_VISITED_COUNT || 0} times - the crew probably knows your order by heart!`}
           />
           <MetricCard
-            title="Favorite Month"
-            value={getMonthName(metrics?.favorite_month?.MONTH) || 'N/A'}
-            subtitle={`You visited ${metrics?.favorite_month?.NUMOFVISITS || 0} times`}
+            title="Your Sub Season"
+            value={`${getMonthName(metrics?.favorite_month?.MONTH) || 'N/A'} is Your Prime Time!`}
+            subtitle={`You made ${metrics?.favorite_month?.NUMOFVISITS || 0} delicious memories this month - must be something in the air!`}
           />
         </Stack>
       </Container>

@@ -4,6 +4,9 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import Login from './components/Login';
 import CustomerDashboard from './components/CustomerDashboard';
 
+// First, we'll need to add this font link to your public/index.html:
+// <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,7 +23,24 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Segoe UI", "Roboto", "Arial", sans-serif',
+    fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+    h3: {
+      fontWeight: 700,
+      fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+    },
+    h5: {
+      fontWeight: 600,
+      fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+    },
+    h6: {
+      fontWeight: 600,
+      fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+    },
+    subtitle1: {
+      fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+      fontSize: '1rem',
+      lineHeight: 1.5,
+    },
   },
   components: {
     MuiCard: {
@@ -39,6 +59,14 @@ const theme = createTheme({
           borderRadius: 8,
           textTransform: 'none',
           fontWeight: 600,
+          fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: '"Poppins", "Segoe UI", "Roboto", sans-serif',
         },
       },
     },
